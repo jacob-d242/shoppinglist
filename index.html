@@ -8,13 +8,21 @@
 </head>
 <body>
     <div id="shopping-list">
-        <h1>{{header.toUpperCase()}} </h1>
+        <h1>{{header.toUpperCase()}} || Welcome</h1>
         <ul>
-            <li v-for = "item in items ">{{item}}</li>
+            <li v-for = "item in items ">{{item.label}}</li>
+
         </ul>
+        <label>
+            <input type="checkbox" v-model="newItemPriority"> High Priority
+            {{newItemPriority}}
+        </label>
         <div class="add-item-form">
-            <input v-model="newItem" placeholder="New item" type="text">
-            <button class="btn btn-primary" v-on:click="items.push(newItem)" >Save</button>
+            <input v-model.lazy="newItem" placeholder="New item" type="text">
+            <button 
+            class="btn btn-primary" 
+            @click="saveItens" 
+            >Save</button>
         </div>
     </div>
 
@@ -25,11 +33,18 @@
             data:{
                 header: 'Shopping List app',
                 newItem :'',
+                newItemPriority : false,
                 items :[ 
-                    '10 Cookies',
-                    '10 Chicken',
-                    '10 Blue berries'
+                    {id :1, label :'10 Cookies'},
+                    {id : 2, label :'10 Chicken'},
+                    {id : 3 , label :'10 Blue berries'}
             ]
+            },
+            methods:{
+                saveItens(){
+                    this.items.push({id:this.items.length + 1 , label:this.newItem})
+                    this.newItem=""
+                }
             }
         })
     </script>
